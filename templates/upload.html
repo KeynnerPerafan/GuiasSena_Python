@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="card-title mb-4">Subir Guía de Aprendizaje</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    <label class="form-label">{{ form.nombre_guia.label.text }}</label>
+                    {{ form.nombre_guia(class="form-control") }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">{{ form.descripcion.label.text }}</label>
+                    {{ form.descripcion(class="form-control") }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">{{ form.programa.label.text }}</label>
+                    {{ form.programa(class="form-select") }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">{{ form.archivo_pdf.label.text }}</label>
+                    {{ form.archivo_pdf(class="form-control") }}
+                </div>
+
+                <div class="mb-3 text-end">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

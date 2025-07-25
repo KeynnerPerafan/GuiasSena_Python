@@ -1,0 +1,66 @@
+<!-- templates/guides.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Guías de Aprendizaje</h2>
+        <a href="{{ url_for('subir_guia') }}" class="btn btn-primary">Subir Nueva Guía</a>
+    </div>
+
+    <div class="table-responsive">
+        <table id="tablaGuias" class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre Guía</th>
+                    <th>Descripción</th>
+                    <th>Programa</th>
+                    <th>Instructor</th>
+                    <th>Regional</th>
+                    <th>Fecha</th>
+                    <th>PDF</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for guia in guias %}
+                <tr>
+                    <td>{{ guia.nombre_guia }}</td>
+                    <td>{{ guia.descripcion }}</td>
+                    <td>{{ guia.programa }}</td>
+                    <td>{{ guia.instructor.nombre }}</td>
+                    <td>{{ guia.instructor.regional }}</td>
+                    <td>{{ guia.fecha_subida.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td class="text-center">
+                        <a href="{{ url_for('uploaded_file', filename=guia.archivo_pdf) }}" target="_blank">
+                            📄
+                        </a>
+                        <td>
+                            <form action="{{ url_for('eliminar_guia', guia_id=guia.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta guía?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tablaGuias').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            }
+        });
+    });
+</script>
+{% endblock %}
